@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Mock Test</string>
+    <string name="login_label">Login</string>
+
+    <string name="Student_label">Student</string>
+    <string name="Trainer_label">Trainer</string>
+    <string name="uname_label">User Name</string>
+    <string name="pasword_label">Password</string>
+    <string name="register_hint">New User Register Here!</string>
+
 </resources>
