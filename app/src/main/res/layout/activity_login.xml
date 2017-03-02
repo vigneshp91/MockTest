@@ -14,31 +14,49 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login_label"
-        android:textSize="30sp"
+        android:text="@string/app_name"
+        android:textSize="25sp"
         android:textAllCaps="true"
         android:layout_marginTop="15dp"
         android:layout_gravity="center"/>
-    <RadioGroup
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:gravity="center">
-        <RadioButton
+        android:layout_height="wrap_content">
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Student_label"
-            android:layout_marginRight="50dp"
-            android:layout_marginEnd="50dp"
-            android:id="@+id/student_login"/>
-        <RadioButton
-            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/user_hint"
+            android:textSize="15sp"
+            android:text="@string/usertype_login_hint"/>
+
+        <RadioGroup
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/Trainer_label"
-            android:id="@+id/trainer_login"/>
-    </RadioGroup>
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Student_label"
+                android:layout_marginRight="50dp"
+                android:layout_marginEnd="50dp"
+                android:id="@+id/student_login"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Trainer_label"
+                android:id="@+id/trainer_login"/>
+        </RadioGroup>
+
+    </LinearLayout>
+
+
+
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/usernameWrapper"

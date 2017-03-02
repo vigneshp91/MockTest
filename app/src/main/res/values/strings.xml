@@ -7,5 +7,7 @@
     <string name="uname_label">User Name</string>
     <string name="pasword_label">Password</string>
     <string name="register_hint">New User Register Here!</string>
+    <string name="usertype_login_hint">Login as</string>
+    <string name="usertype_registration_hint">Register as</string>
 
 </resources>

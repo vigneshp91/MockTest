@@ -33,6 +33,13 @@ public class MockTestDb {
         return  db.query(TestDbHelper.MOCKTEST_USERTABLE,columns,TestDbHelper._USER+" = ?",args,null,null,null);
     }
 
+    public Cursor loginUser(String uname){
+        SQLiteDatabase db= mHelper.getWritableDatabase();
+        String[] columns={TestDbHelper._USER,TestDbHelper._PASS};
+        String args[]={uname};
+        return  db.query(TestDbHelper.MOCKTEST_USERTABLE,columns,TestDbHelper._USER+" = ?",args,null,null,null);
+    }
+
     public static class TestDbHelper extends SQLiteOpenHelper {
 
         public static final Integer DB_VERSION=5;
