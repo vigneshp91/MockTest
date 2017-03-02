@@ -1,5 +1,6 @@
 package com.mocktest;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -78,17 +79,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-/*        TextView _tv = (TextView) findViewById( R.id.textView1 );
-        new CountDownTimer(20*60000, 1000) {
 
-            public void onTick(long millisUntilFinished) {
-                _tv.setText("seconds remaining: " +new SimpleDateFormat("mm:ss:SS").format(new Date( millisUntilFinished)));
-            }
-
-            public void onFinish() {
-                _tv.setText("done!");
-            }
-        }.start();*/
     }
 
     @Override
@@ -111,6 +102,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             usernameWrapper.setError("User Already Exist");
                         }else {
                             mTestdb.registerUser(uname_txt, pass_txt, user_type);
+                            Toast.makeText(this, "Registered Successfully", Toast.LENGTH_SHORT).show();
                         }
                     }else{
                         /*Cursor c=mTestdb.loginUser(uname_txt);
@@ -119,6 +111,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }*/
                         if (mTestdb.loginUser(uname_txt).getCount() > 0) {
                             Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+                            Intent testintent=new Intent(this,TestActivity.class);
+                            startActivity(testintent);
                         }else {
                             Toast.makeText(this, "User not Exist", Toast.LENGTH_SHORT).show();
                         }
@@ -127,6 +121,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             break;
             case R.id.register_link:
+                uname.setText("");
+                password.setText("");
                 if(action_type!=1){
                     submit.setText("Register");
                     action_type=1;
