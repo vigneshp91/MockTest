@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mocktest.database.MockTestDb;
+import com.mocktest.pojo.QuestionList;
+
+import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -44,6 +48,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         register_link.setOnClickListener(this);
 
         mTestdb=new MockTestDb(getApplicationContext());
+
+
+
+/*        Cursor ques=mTestdb.getQuestions();
+        ArrayList<QuestionList> questions=new ArrayList<>();
+        while(ques.moveToNext()){
+
+            QuestionList q_list=new QuestionList();
+            q_list.question=ques.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._QUESTION));
+            q_list.opt1=ques.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._OPTION1));
+            q_list.opt2=ques.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._OPTION2));
+            q_list.opt3=ques.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._OPTION3));
+            q_list.opt4=ques.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._OPTION4));
+            q_list.answer=ques.getInt(ques.getColumnIndex(MockTestDb.TestDbHelper._ANSWER));
+            questions.add(q_list);
+        }
+        Log.d("ques", String.valueOf(ques.getCount()));*/
 
         uname.addTextChangedListener(new TextWatcher() {
             @Override

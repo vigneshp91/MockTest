@@ -40,28 +40,49 @@ public class MockTestDb {
         return  db.query(TestDbHelper.MOCKTEST_USERTABLE,columns,TestDbHelper._USER+" = ?",args,null,null,null);
     }
 
+    public Cursor getQuestions(){
+        SQLiteDatabase db= mHelper.getWritableDatabase();
+        String[] columns={TestDbHelper._QUESTION,TestDbHelper._OPTION1,TestDbHelper._OPTION2,TestDbHelper._OPTION3,TestDbHelper._OPTION4,TestDbHelper._ANSWER};
+
+        return  db.query(TestDbHelper.MOCKTEST_QUESTABLE,columns,null,null,null,null,null,"0,20");
+    }
+
     public static class TestDbHelper extends SQLiteOpenHelper {
 
-        public static final Integer DB_VERSION=5;
+        public static final Integer DB_VERSION=6;
         public static final String MOCKTEST_DB="MOCKTEST_DB";
         public static final String MOCKTEST_USERTABLE="USER_TBL";
+        public static final String MOCKTEST_QUESTABLE="QUES_TBL";
         public static final String _USER="USER";
         public static final String _PASS="PASSWORD";
         public static final String _USER_TYPE="USER_TYPE";
+        public static final String _QUESTION="QUESTION";
+        public static final String _OPTION1="OPTION1";
+        public static final String _OPTION2="OPTION2";
+        public static final String _OPTION3="OPTION3";
+        public static final String _OPTION4="OPTION4";
+        public static final String _ANSWER="ANSWER";
 
         String CREATE_TABLE_FOR_USER="CREATE TABLE "+MOCKTEST_USERTABLE+" ("+_USER+" VARCHAR, "+_PASS+" VARCHAR, "+_USER_TYPE
         + " VARCHAR )";
+
+        String CREATE_TABLE_QUESTIONS="CREATE TABLE "+MOCKTEST_QUESTABLE+" ("+_QUESTION+" VARCHAR, "+_OPTION1+" VARCHAR, "+_OPTION2+
+                " VARCHAR, "+_OPTION3+" VARCHAR, "+_OPTION4+" VARCHAR, "+_ANSWER+" INTEGER )";
+
         String DROP_TABLE_FOR_USER="DROP TABLE IF EXISTS "+MOCKTEST_USERTABLE;
+        String DROP_TABLE_FOR_QUESTION="DROP TABLE IF EXISTS "+MOCKTEST_QUESTABLE;
 
         public TestDbHelper(Context context) {
             super(context, MOCKTEST_DB, null, DB_VERSION);
             Log.e("db",CREATE_TABLE_FOR_USER);
+            Log.e("db",CREATE_TABLE_QUESTIONS);
         }
 
         @Override
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
             try{
                 sqLiteDatabase.execSQL(CREATE_TABLE_FOR_USER);
+                sqLiteDatabase.execSQL(CREATE_TABLE_QUESTIONS);
             }catch (Exception e){}
 
         }
@@ -70,6 +91,7 @@ public class MockTestDb {
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
             try {
                 sqLiteDatabase.execSQL(DROP_TABLE_FOR_USER);
+                sqLiteDatabase.execSQL(DROP_TABLE_FOR_QUESTION);
                 onCreate(sqLiteDatabase);
             }catch (Exception e){}
 
