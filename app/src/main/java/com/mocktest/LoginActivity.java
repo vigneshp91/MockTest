@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView user_hint,register_link;
     Button submit;
     private static int action_type=0;
-    String uname_txt,user_type,pass_txt;
+    String uname_txt,user_type,pass_txt,db_pass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,23 +48,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         register_link.setOnClickListener(this);
 
         mTestdb=new MockTestDb(getApplicationContext());
-
-
-
-/*        Cursor ques=mTestdb.getQuestions();
-        ArrayList<QuestionList> questions=new ArrayList<>();
-        while(ques.moveToNext()){
-
-            QuestionList q_list=new QuestionList();
-            q_list.question=ques.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._QUESTION));
-            q_list.opt1=ques.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._OPTION1));
-            q_list.opt2=ques.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._OPTION2));
-            q_list.opt3=ques.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._OPTION3));
-            q_list.opt4=ques.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._OPTION4));
-            q_list.answer=ques.getInt(ques.getColumnIndex(MockTestDb.TestDbHelper._ANSWER));
-            questions.add(q_list);
-        }
-        Log.d("ques", String.valueOf(ques.getCount()));*/
 
         uname.addTextChangedListener(new TextWatcher() {
             @Override
@@ -124,18 +107,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }else {
                             mTestdb.registerUser(uname_txt, pass_txt, user_type);
                             Toast.makeText(this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                            register_link.performLongClick();
                         }
                     }else{
-                        /*Cursor c=mTestdb.loginUser(uname_txt);
+                        Cursor c=mTestdb.loginUser(uname_txt);
                         if(c.getCount()>0){
 
-                        }*/
-                        if (mTestdb.loginUser(uname_txt).getCount() > 0) {
+                             db_pass=c.getString(c.getColumnIndex(MockTestDb.TestDbHelper._PASS));
+                        }else{
+                            Toast.makeText(this, "User not Exist", Toast.LENGTH_SHORT).show();
+                        }
+                        if (db_pass.equalsIgnoreCase(pass_txt)) {
                             Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+                            TestUtil.getInstance().saveUser(getApplicationContext(),uname_txt);
                             Intent testintent=new Intent(this,TestActivity.class);
                             startActivity(testintent);
                         }else {
-                            Toast.makeText(this, "User not Exist", Toast.LENGTH_SHORT).show();
+                            password.setText("");
+                            passwordWrapper.setErrorEnabled(true);
+                            passwordWrapper.setError("Password Incorrect");
                         }
 
                     }

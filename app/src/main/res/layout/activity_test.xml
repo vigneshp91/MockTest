@@ -26,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
+            android:id="@+id/questions_layout"
             android:orientation="vertical">
 
         <TextView
@@ -79,6 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
+        android:id="@+id/opt_buttons"
         android:gravity="center_horizontal">
         <Button
             android:layout_width="wrap_content"
