@@ -50,6 +50,13 @@ public class MockTestDb {
         return  db.query(TestDbHelper.MOCKTEST_QUESTABLE,columns,null,null,null,null,null,"0,5");
     }
 
+    public Cursor getTests(){
+        SQLiteDatabase db= mHelper.getWritableDatabase();
+        String[] columns={TestDbHelper._USER,TestDbHelper._SCORE,TestDbHelper._TIME};
+
+        return  db.query(TestDbHelper.MOCKTEST_TESTTABLE,columns,null,null,null,null,null);
+    }
+
     public static class TestDbHelper extends SQLiteOpenHelper {
 
         public static final Integer DB_VERSION=8;
