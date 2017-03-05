@@ -110,10 +110,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             register_link.performLongClick();
                         }
                     }else{
-                        Cursor c=mTestdb.loginUser(uname_txt);
+                        Cursor c=mTestdb.checkUser(uname_txt);
                         if(c.getCount()>0){
+                            while(c.moveToNext()){
+                                db_pass=c.getString(c.getColumnIndex(MockTestDb.TestDbHelper._PASS));
+                            }
 
-                             db_pass=c.getString(c.getColumnIndex(MockTestDb.TestDbHelper._PASS));
+
                         }else{
                             Toast.makeText(this, "User not Exist", Toast.LENGTH_SHORT).show();
                         }
@@ -122,6 +125,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             TestUtil.getInstance().saveUser(getApplicationContext(),uname_txt);
                             Intent testintent=new Intent(this,TestActivity.class);
                             startActivity(testintent);
+                            finish();
                         }else {
                             password.setText("");
                             passwordWrapper.setErrorEnabled(true);

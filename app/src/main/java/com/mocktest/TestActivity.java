@@ -1,15 +1,19 @@
 package com.mocktest;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.ButtonBarLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.mocktest.database.MockTestDb;
 import com.mocktest.pojo.QuestionList;
 
 import java.text.SimpleDateFormat;
@@ -20,33 +24,42 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class TestActivity extends AppCompatActivity implements View.OnClickListener {
-    TextView _tv,question;
+    TextView _tv,question,question_cnt,score,answered_txt,unans_txt,dash_link;
     private ArrayList<QuestionList> questions;
     private RadioButton ans1,ans2,ans3,ans4;
-    private int answered,unanswered,answered_correct,selected_ans,question_index,q_no;
+    private int answered,unanswered,answered_correct,selected_ans,question_index,q_no=0;
     private Button submit,clear,skip;
-    private LinearLayout opt_buttons,questions_layout;
+    private LinearLayout opt_buttons,questions_layout,report;
+
+    private MockTestDb mockTestDb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-               _tv = (TextView) findViewById( R.id.timer );
+        _tv = (TextView) findViewById( R.id.timer );
         question = (TextView) findViewById( R.id.question);
+        score = (TextView) findViewById( R.id.score);
+        answered_txt = (TextView) findViewById( R.id.answered);
+        unans_txt = (TextView) findViewById( R.id.unanswered);
+        question_cnt = (TextView) findViewById( R.id.question_cnt);
+        dash_link = (TextView) findViewById( R.id.dash_link);
         ans1 = (RadioButton) findViewById( R.id.ans1);
-        ans1 = (RadioButton) findViewById( R.id.ans2);
-        ans1 = (RadioButton) findViewById( R.id.ans3);
-        ans1 = (RadioButton) findViewById( R.id.ans4);
+        ans2 = (RadioButton) findViewById( R.id.ans2);
+        ans3 = (RadioButton) findViewById( R.id.ans3);
+        ans4 = (RadioButton) findViewById( R.id.ans4);
         submit = (Button) findViewById( R.id.submit);
         clear = (Button) findViewById( R.id.clear);
         skip = (Button) findViewById( R.id.skip);
 
         opt_buttons = (LinearLayout) findViewById( R.id.opt_buttons);
         questions_layout = (LinearLayout) findViewById( R.id.questions_layout);
+        report = (LinearLayout) findViewById( R.id.report);
 
         skip.setOnClickListener(this);
         submit.setOnClickListener(this);
         clear.setOnClickListener(this);
+        dash_link.setOnClickListener(this);
         new CountDownTimer(20*60000, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -62,7 +75,9 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
             }
         }.start();
        //
-/*                Cursor ques=mTestdb.getQuestions();
+        mockTestDb=new MockTestDb(getApplicationContext());
+
+        Cursor ques=mockTestDb.getQuestions();
         questions=new ArrayList<>();
         while(ques.moveToNext()){
 
@@ -77,15 +92,13 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         }
         Log.d("ques", String.valueOf(ques.getCount()));
 
-        Random rand = new Random();
-        while(questions.size() > 0) {
+       /* while(questions.size() > 0) {
             int question_index = rand.nextInt(questions.size());
            // System.out.println("Selected: "+questions.remove(index));
 
-        }
+        }*/
         move_to_next_question(get_nextquestion());
 
-        */
 
     }
 
@@ -110,18 +123,28 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                 }else {
                     unanswered+=1;
                 }
-
-                /*
+                ans1.setChecked(false);
+                ans2.setChecked(false);
+                ans3.setChecked(false);
+                ans4.setChecked(false);
                 if(selected_ans==questions.get(question_index).answer){
                 answered_correct+=1;
                 }
-                if(q_no!=questions.size())
+                if(q_no<4)
                     move_to_next_question(get_nextquestion());
                     else
                     complete_test();
-                 */
                 break;
             case R.id.clear:
+                ans1.setChecked(false);
+                ans2.setChecked(false);
+                ans3.setChecked(false);
+                ans4.setChecked(false);
+                break;
+            case R.id.dash_link:
+                Intent dash=new Intent(TestActivity.this,DashBoard.class);
+                startActivity(dash);
+                finish();
                 break;
         }
     }
@@ -130,7 +153,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         Random rand = new Random();
          question_index=0;
         if(questions.size() > 0) {
-            question_index = rand.nextInt(questions.size());
+            question_index = rand.nextInt(questions.size()-1);
             questions.remove(question_index);
         }
         return question_index;
@@ -138,6 +161,8 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 
     private void move_to_next_question(int q_index){
         q_no+=1;
+        Log.d("qindx", String.valueOf(q_index));
+        question_cnt.setText("Question "+q_no);
         question.setText(questions.get(q_index).question);
         ans1.setText(questions.get(q_index).opt1);
         ans2.setText(questions.get(q_index).opt2);
@@ -149,5 +174,12 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     private void complete_test(){
         opt_buttons.setVisibility(View.GONE);
         questions_layout.setVisibility(View.GONE);
+        _tv.setVisibility(View.GONE);
+        report.setVisibility(View.VISIBLE);
+        score.setText("Score: "+answered_correct+"/"+q_no);
+        answered_txt.setText("Answered: "+answered);
+        unans_txt.setText("Unanswered: "+unanswered);
+        question_cnt.setText("Report");
+        mockTestDb.insertTestdet(TestUtil.getInstance().getUser(this),answered_correct,System.currentTimeMillis()/1000);
     }
 }

@@ -26,7 +26,7 @@ public class TestUtil {
     }
 
     public String getUser(Activity activity){
-        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = activity.getSharedPreferences(MyPREFERENCES,Context.MODE_PRIVATE);
         return sharedPref.getString(UNAME_KEY,"");
     }
 
