@@ -1,9 +1,13 @@
 package com.mocktest;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -70,5 +74,32 @@ public class DashBoard extends AppCompatActivity {
 
 
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.dash, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_test:
+                Intent testintent=new Intent(this,TestActivity.class);
+                startActivity(testintent);
+                finish();
+                return true;
+            case R.id.menu_logout:
+                TestUtil.getInstance().saveUser(this,"");
+                Intent logoutintent=new Intent(this,LoginActivity.class);
+                startActivity(logoutintent);
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
