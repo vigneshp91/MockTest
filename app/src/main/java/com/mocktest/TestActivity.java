@@ -79,16 +79,34 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 
         Cursor ques=mockTestDb.getQuestions();
         questions=new ArrayList<>();
-        while(ques.moveToNext()){
+        if(ques.getCount()>0) {
+            while (ques.moveToNext()) {
 
-            QuestionList q_list=new QuestionList();
-            q_list.question=ques.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._QUESTION));
-            q_list.opt1=ques.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._OPTION1));
-            q_list.opt2=ques.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._OPTION2));
-            q_list.opt3=ques.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._OPTION3));
-            q_list.opt4=ques.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._OPTION4));
-            q_list.answer=ques.getInt(ques.getColumnIndex(MockTestDb.TestDbHelper._ANSWER));
-            questions.add(q_list);
+                QuestionList q_list = new QuestionList();
+                q_list.question = ques.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._QUESTION));
+                q_list.opt1 = ques.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._OPTION1));
+                q_list.opt2 = ques.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._OPTION2));
+                q_list.opt3 = ques.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._OPTION3));
+                q_list.opt4 = ques.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._OPTION4));
+                q_list.answer = ques.getInt(ques.getColumnIndex(MockTestDb.TestDbHelper._ANSWER));
+                questions.add(q_list);
+            }
+        }else{
+            mockTestDb.setQuestions();
+            Cursor ques1=mockTestDb.getQuestions();
+            if(ques1.getCount()>0) {
+                while (ques1.moveToNext()) {
+
+                    QuestionList q_list = new QuestionList();
+                    q_list.question = ques1.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._QUESTION));
+                    q_list.opt1 = ques1.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._OPTION1));
+                    q_list.opt2 = ques1.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._OPTION2));
+                    q_list.opt3 = ques1.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._OPTION3));
+                    q_list.opt4 = ques1.getString(ques.getColumnIndex(MockTestDb.TestDbHelper._OPTION4));
+                    q_list.answer = ques1.getInt(ques.getColumnIndex(MockTestDb.TestDbHelper._ANSWER));
+                    questions.add(q_list);
+                }
+            }
         }
         Log.d("ques", String.valueOf(ques.getCount()));
 
@@ -106,6 +124,8 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.skip:
+                move_to_next_question(get_nextquestion());
+                unanswered+=1;
                 break;
             case R.id.submit:
                 if(ans1.isChecked()){
