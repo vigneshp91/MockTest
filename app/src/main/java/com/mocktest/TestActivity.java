@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.mocktest.database.MockTestDb;
@@ -32,6 +33,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     private RadioButton ans1,ans2,ans3,ans4;
     private int answered,unanswered,answered_correct,selected_ans,question_index,q_no=0;
     private Button submit,clear,skip;
+    RadioGroup options;
     private LinearLayout opt_buttons,questions_layout,report;
 
     private MockTestDb mockTestDb;
@@ -54,6 +56,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         submit = (Button) findViewById( R.id.submit);
         clear = (Button) findViewById( R.id.clear);
         skip = (Button) findViewById( R.id.skip);
+        options = (RadioGroup) findViewById( R.id.options);
 
         opt_buttons = (LinearLayout) findViewById( R.id.opt_buttons);
         questions_layout = (LinearLayout) findViewById( R.id.questions_layout);
@@ -74,7 +77,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             public void onFinish() {
-                _tv.setText("done!");
+                complete_test();
             }
         }.start();
        //
@@ -127,8 +130,12 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.skip:
-                move_to_next_question(get_nextquestion());
                 unanswered+=1;
+                questions.remove(question_index);
+                if(q_no<4)
+                    move_to_next_question(get_nextquestion());
+                else
+                    complete_test();
                 break;
             case R.id.submit:
                 if(ans1.isChecked()){
@@ -146,23 +153,24 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                 }else {
                     unanswered+=1;
                 }
-                ans1.setChecked(false);
+                options.clearCheck();
+             /*   ans1.setChecked(false);
                 ans2.setChecked(false);
                 ans3.setChecked(false);
-                ans4.setChecked(false);
+                ans4.setChecked(false);*/
                 if(selected_ans==questions.get(question_index).answer){
                 answered_correct+=1;
                 }
+                questions.remove(question_index);
                 if(q_no<4)
                     move_to_next_question(get_nextquestion());
                     else
                     complete_test();
+
                 break;
             case R.id.clear:
-                ans1.setChecked(false);
-                ans2.setChecked(false);
-                ans3.setChecked(false);
-                ans4.setChecked(false);
+                options.clearCheck();
+
                 break;
             case R.id.dash_link:
                 Intent dash=new Intent(TestActivity.this,DashBoard.class);
@@ -177,13 +185,14 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
          question_index=0;
         if(questions.size() > 0) {
             question_index = rand.nextInt(questions.size()-1);
-            questions.remove(question_index);
+
         }
         return question_index;
     }
 
     private void move_to_next_question(int q_index){
         q_no+=1;
+        options.clearCheck();
         Log.d("qindx", String.valueOf(q_index));
         question_cnt.setText("Question "+q_no);
         question.setText(questions.get(q_index).question);
