@@ -54,19 +54,76 @@ public class MockTestDb {
         SQLiteDatabase db= mHelper.getWritableDatabase();
         String[] columns={TestDbHelper._USER,TestDbHelper._SCORE,TestDbHelper._TIME};
 
-        return  db.query(TestDbHelper.MOCKTEST_TESTTABLE,columns,null,null,null,null,null);
+        return  db.query(TestDbHelper.MOCKTEST_TESTTABLE,columns,null,null,null,null,TestDbHelper._SCORE+" desc");
+    }
+    public Cursor getUserTests(String uname){
+        SQLiteDatabase db= mHelper.getWritableDatabase();
+        String[] columns={TestDbHelper._USER,TestDbHelper._SCORE,TestDbHelper._TIME};
+        String args[]={uname};
+        return  db.query(TestDbHelper.MOCKTEST_TESTTABLE,columns,TestDbHelper._USER+" = ?",args,null,null,TestDbHelper._SCORE+" desc");
     }
 
     public void setQuestions(){
         SQLiteDatabase db= mHelper.getWritableDatabase();
         db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"Grand Central Terminal, Park Avenue, New York is the world's\",\"largest railway station\",\"highest railway station\",\"longest railway station\",\"None of the above\",1)");
+
         db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"Entomology is the science that studies\",\"Behavior of human beings\",\"Insects\",\"The origin and history of technical and scientific terms\",\"The formation of rocks\",2)");
+
         db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"Eritrea, which became the 182nd member of the UN in 1993, is in the continent of\",\"Asia\",\"Africa\",\"Europe\",\"Australia\",2)");
+
         db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"Garampani sanctuary is located at\",\"Junagarh, Gujarat\",\"Diphu, Assam\",\"Kohima, Nagaland\",\"Gangtok, Sikkim\",2)");
+
         db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"For which of the following disciplines is Nobel Prize awarded?\",\"Physics and Chemistry\",\"Physiology or Medicine\",\"Literature, Peace and Economics\",\"All of the above\",4)");
+
         db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"Hitler party which came into power in 1933 is known as\",\"Labour Party\",\"Nazi Party\",\"Ku-Klux-Klan\",\"Democratic Party\",2)");
+
         db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"FFC stands for\",\"Foreign Finance Corporation\",\"Film Finance Corporation\",\"Federation of Football Council\",\"None of the above\",2)");
+
         db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"Fastest shorthand writer was\",\"Dr. G. D. Bist\",\"J.R.D. Tata\",\"J.M. Tagore\",\"Khudada Khan\",1)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"Epsom (England) is the place associated with\",\"Horse racing\",\"Polo\",\"Shooting\",\"Snooker\",1)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"First human heart transplant operation conducted by Dr. Christiaan Barnard on Louis Washkansky, was conducted in\",\"1967\",\"1968\",\"1958\",\"1922\",1)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"Galileo was an Italian astronomer who\",\"developed the telescope\",\"discovered four satellites of Jupiter\",\"discovered that the movement of pendulum produces a regular time measurement\",\"All of the above\",4)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"Golf player Vijay Singh belongs to which country?\",\"USA\",\"Fiji\",\"India\",\"UK\",2)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"First Afghan War took place in\",\"1839\",\"1843\",\"1833\",\"1848\",1)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"Gulf cooperation council was originally formed by\",\"Bahrain, Kuwait, Oman, Qatar, Saudi Arabia and United Arab Emirates\",\"Second World Nations\",\"Third World Nations\",\"Fourth World Nations\",1)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"First China War was fought between\",\"China and Britain\",\"China and France\",\"China and Egypt\",\"China and Greek\",1)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"Guwahati High Court is the judicature of\",\"Nagaland\",\"Arunachal Pradesh\",\"Assam\",\"All of the above\",4)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"Friction can be reduced by changing from\",\"sliding to rolling\",\"rolling to sliding\",\"potential energy to kinetic energy\",\"dynamic to static\",1)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"Fire temple is the place of worship of which of the following religion?\",\"Taoism\",\"Judaism\",\"Zoroastrianism (Parsi Religion)\",\"Shintoism\",3)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"Film and TV institute of India is located at\",\"Pune (Maharashtra)\",\"Rajkot (Gujarat)\",\"Pimpri (Maharashtra)\",\"Perambur (Tamilnadu)\",1)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"Headquarters of UNO are situated at\",\"New York USA\",\"Hague (Netherlands)\",\"Geneva\",\"Paris\",1)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"First International Peace Congress was held in London in\",\"1564 AD\", \"1798 AD\",\"1843 AD\",\"1901 AD\",3)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"For seeing objects at the surface of water from a submarine under water, the instrument used is\",\"kaleidoscope\",\"periscope\",\"spectroscope\",\"telescope\",2)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"Dr. Zakir Hussain was\",\"the first Muslim president of India\",\"first vice president of India\",\"first president of Indian National Congress\",\"first speaker of Lok Sabha\",1)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"G-15 is an economic grouping of\",\"First World Nations\",\"Second World Nations\",\"Third World Nations\",\"Fourth World Nations\",3)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"Fathometer is used to measure\",\"Earthquakes\",\"Rainfall\",\"Ocean depth\",\"Sound intensity\",3)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"Georgia, Uzbekistan and Turkmenistan became the members of UNO in\",\"1991\",\"1992\",\"1993\",\"1994\",2)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"During World War II, when did Germany attack France?\",\"1940\",\"1941\",\"1942\",\"1943\",1)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"Frederick Sanger is a twice recipient of the Nobel Prize for\",\"Chemistry in 1958 and 1980\",\"Physics in 1956 and 1972\",\"Chemistry in 1954 and Peace in 1962\",\"Physics in 1903 and Chemistry in 1911\",1)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"GNLF stands for\",\"Gorkha National Liberation Front\",\"Gross National Liberation Form\",\"Both option A and B\",\"None of the above\",1)");
+
+        db.execSQL("INSERT INTO QUES_TBL (QUESTION,OPTION1,OPTION2,OPTION3,OPTION4,ANSWER) VALUES (\"Excessive secretion from the pituitary gland in the children results in\",\"increased height\",\"retarded growth\",\"weakening of bones\",\"None of the above\",1)");
     }
 
     public static class TestDbHelper extends SQLiteOpenHelper {

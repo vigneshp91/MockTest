@@ -129,6 +129,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (db_pass.equalsIgnoreCase(pass_txt)) {
                             Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
                             TestUtil.getInstance().saveUser(getApplicationContext(),uname_txt);
+                            TestUtil.getInstance().saveUserType(getApplicationContext(),user_type);
                             Intent testintent=new Intent(this,DashBoard.class);
                             startActivity(testintent);
                             finish();

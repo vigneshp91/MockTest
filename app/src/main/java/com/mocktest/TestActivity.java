@@ -212,7 +212,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
         answered_txt.setText("Answered: "+answered);
         unans_txt.setText("Unanswered: "+unanswered);
         question_cnt.setText("Report");
-        mockTestDb.insertTestdet(TestUtil.getInstance().getUser(this),answered_correct,System.currentTimeMillis()/1000);
+        mockTestDb.insertTestdet(TestUtil.getInstance().getUser(this),answered_correct,System.currentTimeMillis());
     }
 
     @Override

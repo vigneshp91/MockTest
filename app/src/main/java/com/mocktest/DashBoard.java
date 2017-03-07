@@ -27,7 +27,8 @@ import static android.R.attr.data;
 public class DashBoard extends AppCompatActivity {
     TableLayout scroll;
     MockTestDb mockTestDb;
-    LinearLayout no_test;
+    LinearLayout no_test,test_list;
+    Menu menutest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +37,12 @@ public class DashBoard extends AppCompatActivity {
         mockTestDb=new MockTestDb(getApplicationContext());
          scroll = (TableLayout) this.findViewById(R.id.testlist);
         no_test = (LinearLayout) this.findViewById(R.id.no_test);
-
+        test_list = (LinearLayout) this.findViewById(R.id.test_list);
         Cursor c=mockTestDb.getTests();
+        if(TestUtil.getInstance().getUserType(this).equalsIgnoreCase("S")){
+             c = mockTestDb.getUserTests(TestUtil.getInstance().getUser(this));
+        }
+
         if(c.getCount()>0){
             //test available
             TableRow tr1 = new TableRow(this);
@@ -56,10 +61,10 @@ public class DashBoard extends AppCompatActivity {
                 TextView textview = new TextView(this);
                 String user=c.getString(c.getColumnIndex(MockTestDb.TestDbHelper._USER));
                 int score=c.getInt(c.getColumnIndex(MockTestDb.TestDbHelper._SCORE));
-                long date_db=c.getLong(c.getColumnIndex(MockTestDb.TestDbHelper._USER));
+                long date_db=c.getLong(c.getColumnIndex(MockTestDb.TestDbHelper._TIME));
 
                 Date date = new Date(date_db);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.getDefault());
 //                sdf.setTimeZone(TimeZone.getTimeZone("GMT-4"));
                 String formattedDate = sdf.format(date);
                 textview.setText(user+"         "+String.valueOf(score)+"           "+formattedDate);
@@ -70,10 +75,9 @@ public class DashBoard extends AppCompatActivity {
             }
 
         }else{
-            scroll.setVisibility(View.GONE);
+            test_list.setVisibility(View.GONE);
             no_test.setVisibility(View.VISIBLE);
         }
-
 
 
 
@@ -83,7 +87,18 @@ public class DashBoard extends AppCompatActivity {
     {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.dash, menu);
+        this.menutest=menu;
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        if(TestUtil.getInstance().getUserType(this).equalsIgnoreCase("T")) {
+            MenuItem testMenuItem = menu.findItem(R.id.menu_test);
+            testMenuItem.setVisible(false);
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
