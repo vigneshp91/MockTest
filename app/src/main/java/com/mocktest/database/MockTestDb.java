@@ -47,7 +47,7 @@ public class MockTestDb {
         SQLiteDatabase db= mHelper.getWritableDatabase();
         String[] columns={TestDbHelper._QUESTION,TestDbHelper._OPTION1,TestDbHelper._OPTION2,TestDbHelper._OPTION3,TestDbHelper._OPTION4,TestDbHelper._ANSWER};
 
-        return  db.query(TestDbHelper.MOCKTEST_QUESTABLE,columns,null,null,null,null,null,"0,5");
+        return  db.query(TestDbHelper.MOCKTEST_QUESTABLE,columns,null,null,null,null,null,"0,11");
     }
 
     public Cursor getTests(){

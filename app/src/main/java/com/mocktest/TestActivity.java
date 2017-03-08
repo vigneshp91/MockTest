@@ -132,7 +132,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.skip:
                 unanswered+=1;
                 questions.remove(question_index);
-                if(q_no<4)
+                if(q_no<10)
                     move_to_next_question(get_nextquestion());
                 else
                     complete_test();
@@ -162,7 +162,7 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
                 answered_correct+=1;
                 }
                 questions.remove(question_index);
-                if(q_no<4)
+                if(q_no<10)
                     move_to_next_question(get_nextquestion());
                     else
                     complete_test();
