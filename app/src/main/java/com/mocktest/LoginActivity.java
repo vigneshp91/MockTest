@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView user_hint,register_link;
     Button submit;
     private static int action_type=0;
-    String uname_txt,user_type,pass_txt,db_pass;
+    String uname_txt,user_type,pass_txt,db_pass="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
